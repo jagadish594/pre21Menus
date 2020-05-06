@@ -1,8 +1,9 @@
 import React, {useState, useMemo} from 'react';
 import './App.css';
 import { connect } from "react-redux";
-import Dropdown from "./components/Dropdown";
+import SelectMeal from "./components/SelectMeal";
 import Display from './components/Display';
+
 const App = (props) =>{
   const [mealId, setId] = useState(0);
   const [mealName, setName] = useState("");
@@ -15,14 +16,13 @@ const App = (props) =>{
   return (
     <div className="App">
       <h1>Meal Planner</h1>
-      <Dropdown meals={props.meals} onMealSelection={props.onMealSelection} />
+      <SelectMeal meals={props.meals} onMealSelection={props.onMealSelection} />
       <Display mealId = {mealId} mealName={mealName} />
     </div>
   );
 }
 
 const mapStateToProps = state => {
-  //console.log("state is: ", state);
   return {
     mealDetails: state.mealDetails,
     mealId: state.mealId,
