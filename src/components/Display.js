@@ -1,11 +1,11 @@
 import React from "react";
 
-const Display = ({ mealId, mealName }) => {
+const Display = ({ mealId, mealName, menuId }) => {
   return (
     <div>
       {mealId ? (
         <h2>
-          {mealId} - {mealName}
+          {mealId} - {mealName} -{menuId}
         </h2>
       ) : (
         <h2>Select a meal</h2>
