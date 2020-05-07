@@ -5,7 +5,7 @@ const SelectMeal = props => {
       <Input type="select" onClick={props.onMealSelection(props.menuId)}>
         {props.meals &&
           props.meals.map(meal => (
-            <option key={meal.id} value={meal.id}>
+            <option key={meal.mealId} value={meal.mealId}>
               {meal.name}
             </option>
           ))}

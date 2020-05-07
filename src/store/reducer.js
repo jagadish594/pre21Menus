@@ -1,22 +1,22 @@
 const mealsData = [
     {
-      id: "1",
-      name: "Idly + CoconutChutney"
+      mealId: "1",
+      name: "Idly + Coconut Chutney"
     },
     {
-      id: "2",
-      name: "Dosa + CoconutChutney"
+      mealId: "2",
+      name: "Dosa + Coconut Chutney"
     },
     {
-      id: "3",
-      name: "Dosa + TomatoChutney"
+      mealId: "3",
+      name: "Dosa + Tomato Chutney"
     },
     {
-      id: "4",
-      name: "Pongal + CoconutChutney"
+      mealId: "4",
+      name: "Pongal + Coconut Chutney"
     },
     {
-      id: "5",
+      mealId: "5",
       name: "Chappathi + Kuruma"
     }
   ];
@@ -25,20 +25,54 @@ const mealsData = [
     meals: mealsData,
     mealId: 0,
     mealName: "defaultMealName",
-    menuId: 0
+    menuId: 0,
+    menus: []
   };
+
+
   
   const reducer = (state = initialState, action) => {
+
     const newState = { ...state };
+
+    const updateMenus = (mealId, menuId) => {
+      const mealName = newState.meals.filter(
+        meal => meal.mealId === action.mealId
+      )[0].name;
+      if(newState.menus.length > 0){
+        //check existing menus, and update
+        newState.menus.map(meal =>{
+          if(meal.menuId === menuId){
+            meal.mealId = mealId;
+            meal.mealName = mealName
+          }
+          return null;
+        })
+
+        if(!newState.menus.find(meal => meal.menuId === menuId)){
+          newState.menus.push({
+            menuId: menuId,
+            mealId: mealId,
+            mealName: mealName
+          })
+        }
+
+      }
+      else{
+        //create new menu in menus
+        newState.menus.push({
+          menuId: menuId,
+          mealId: mealId,
+          mealName: mealName
+        })
+      }
+      
+      console.log("new state: ", newState);
+    }
+
     switch (action.type) {
       case "SELECT_MEAL":
-        newState.mealId = action.mealId;
-        const mealName = newState.meals.filter(
-          meal => meal.id === action.mealId
-        )[0].name;
-        newState.mealName = mealName;
-        newState.mealType = action.mealType;
-        newState.menuId = action.menuId;
+        updateMenus(action.mealId, action.menuId);
         break;
       default:
         new Error();
